@@ -1,35 +1,41 @@
-<h1>Sign up</h1>
+<div class="container">
+  <h1>Sign up</h1>
+  <%= stylesheet_link_tag "custom_sign", media: 'all', 'data-turbolinks-track' => true %>
+  <%= form_with(url: sign_up_path) do |form| %>
+    <% if @user.errors.any? %>
+      <div style="color: red" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+          <% @user.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
 
-<%= form_with(url: sign_up_path) do |form| %>
-  <% if @user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <div>
+      <%= form.label :username, style: "display: block" %>
+      <%= form.text_field :username, value: @user.username, required: true, autocomplete: "username" %>
+    </div>
 
-      <ul>
-        <% @user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div>
+      <%= form.label :email, style: "display: block" %>
+      <%= form.email_field :email, value: @user.email, required: true, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div>
+      <%= form.label :password, style: "display: block" %>
+      <%= form.password_field :password, required: true, autocomplete: "new-password" %>
+      <div>12 characters minimum.</div>
+    </div>
+
+    <div>
+      <%= form.label :password_confirmation, style: "display: block" %>
+      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
+    </div>
+
+    <div>
+      <%= form.submit "Sign up" %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.email_field :email, value: @user.email, required: true, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div>
-    <%= form.label :password, style: "display: block" %>
-    <%= form.password_field :password, required: true, autocomplete: "new-password" %>
-    <div>12 characters minimum.</div>
-  </div>
-
-  <div>
-    <%= form.label :password_confirmation, style: "display: block" %>
-    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
-  </div>
-
-  <div>
-    <%= form.submit "Sign up" %>
-  </div>
-<% end %>
+</div>

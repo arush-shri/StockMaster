@@ -1,23 +1,46 @@
-<p style="color: green"><%= notice %></p>
-
-<p>Signed as <%= Current.user.email %></p>
-
-<h2>Login and verification</h2>
-
-<div>
-  <%= link_to "Change password", edit_password_path %>
-</div>
-
-<div>
-  <%= link_to "Change email address", edit_identity_email_path %>
-</div>
-
-<h2>Access history</h2>
-
-<div>
-  <%= link_to "Devices & Sessions", sessions_path %>
-</div>
-
-<br>
-
-<%= button_to "Log out", Current.session, method: :delete %>
+<body>
+  <%= stylesheet_link_tag "custom_home", media: 'all', 'data-turbolinks-track' => true %>
+  <% if (notice)%>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="height:50px  ">
+      <p style="color: green"><%= notice %></p>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <script>
+      setTimeout(function() {
+        document.querySelector('.alert').remove();
+      }, 1500);
+    </script>
+  <%end %>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <%= image_tag("stockMasterLogo.png", alt: "Stock Master Logo", style: "height:50px")%>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" style="font-size: 18px;padding-left: 20px">Hello <%= Current.user.username%>,</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#" style="font-size: 19px;">Create order</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" style="font-size: 19px;">Track order</a></li>
+          </ul>
+        </li>
+        </ul>
+        <form class="d-flex " style="flex-grow: 1;padding-left: 20px; padding-right: 20px">
+          <input class="form-control me-2 ms auto" type="search" placeholder="Search" aria-label="Search" >
+          <button class="btn btn-outline-success" type="submit" >Search</button>
+        </form>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
+          <li class="nav-item">
+            <a class="nav-link" href="#" style="font-size: 19px;">Suppliers Info</a>
+          </li>
+        </ul>
+        <div style = "padding-left: 30px;" >
+        <%= button_to "Log out", Current.session, method: :delete, class: "btn btn-outline-warning"%>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <h1><%= @user %><h1>
+</body>
