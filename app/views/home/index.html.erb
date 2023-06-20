@@ -20,7 +20,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" style="font-size: 18px;padding-left: 20px">Hello <%= Current.user.username%>,</a>
+            <a class="nav-link active" aria-current="page" style="font-size: 18px;padding-left: 20px">Hello <%= @username%>,</a>
           </li>
           <li class="nav-item"><a class="nav-link" href="#" style="font-size: 19px;">Create order</a></li>
           <li class="nav-item"><a class="nav-link" href="#" style="font-size: 19px;">Track order</a></li>
@@ -42,5 +42,5 @@
       </div>
     </div>
   </nav>
-  <h1><%= @user %><h1>
+  <h1><%= @username %><h1>
 </body>

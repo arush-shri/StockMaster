@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order_number: MyString
+  stock_id: 1
+  quantity: 1
+  user_id: 1
+  order_date: 2023-06-20
+  status: MyString
+  total_amount: 9.99
+
+two:
+  order_number: MyString
+  stock_id: 1
+  quantity: 1
+  user_id: 1
+  order_date: 2023-06-20
+  status: MyString
+  total_amount: 9.99
