@@ -1,0 +1,7 @@
+
+    <div class="card">
+        <div class="card-body">
+            <%= @orders.order_number %><br>
+            <%= Stock.find_by(id: @orders.stock_id).product_name%>
+        </div>
+    </div>
