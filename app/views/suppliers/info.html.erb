@@ -34,11 +34,12 @@
     </nav>
     <br>
 
-    <% @orders.each do |order|%>
+    <% @supps.each do |supplier|%>
       <div class="card mx-auto" style="width: 95%;margin-top: 20px;">
           <div class="card-body" >
-              <%= order.order_number %><br>
-              <%= Stock.find_by(id: order.stock_id).product_name%>
+              <%= supplier.supplier_name %><br>
+              <%= supplier.email %>
+              <%= supplier.phone %>
           </div>
       </div>
     <%end%>

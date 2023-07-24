@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resource  :password, only: [:edit, :update]
   get '/orders/create', to: 'orders#create'
   get '/orders/track', to: 'orders#track'
+  get '/suppliers/info', to: 'suppliers#info'
   namespace :identity do
     resource :email,              only: [:edit, :update]
     resource :email_verification, only: [:show, :create]

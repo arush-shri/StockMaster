@@ -33,7 +33,7 @@
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
           <li class="nav-item">
-            <a class="nav-link" href="#" style="font-size: 19px;">Suppliers Info</a>
+            <%= link_to "Suppliers Info", suppliers_info_path, class: "nav-link", style: "font-size: 19px;" %>
           </li>
         </ul>
         <div style = "padding-left: 30px;" >
@@ -42,5 +42,4 @@
       </div>
     </div>
   </nav>
-  <h1><%= @username %><h1>
 </body>

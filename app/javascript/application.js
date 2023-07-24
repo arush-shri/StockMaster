@@ -3,4 +3,4 @@ import React from "react"
 import ReactDOM from "react-dom"
 
 import "popper"
-import "bootstrap"
+import "bootstrap"import * as bootstrap from "bootstrap"
