@@ -10,6 +10,16 @@
       }, 1600);
     </script>
   <%end %>
+  <% if (alert)%>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="height:50px  ">
+      <p style="color: red; margin-bottom: 0px;"><%= alert %></p>
+    </div>
+    <script>
+      setTimeout(function() {
+        document.querySelector('.alert').remove();
+      }, 1600);
+    </script>
+  <%end %>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <%= image_tag("stockMasterLogo.png", alt: "Stock Master Logo", style: "height:50px")%>

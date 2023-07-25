@@ -8,19 +8,30 @@ class OrdersController < ApplicationController
     def new
         @stock_id = params[:order][:stock_id]
         @quantity = params[:order][:quantity]
+        @orderAmount = 0
+        order_num = Time.now.strftime("%m%d%H%M%S")
+        current_date = Time.now.strftime("%d-%m-%y")
         address = "#{params[:order][:flat_num]}, #{params[:order][:area]}, #{params[:order][:city]}, #{params[:order][:state]}, #{params[:order][:pincode]}"
         if !Stock.exists?(@stock_id)
             flash.alert = "Stock does not exist"
             redirect_to orders_create_path(stock_hint: params[:order][:stock_id], quantity_hint: params[:order][:quantity], 
                 flat_hint: params[:order][:flat_num], area_hint: params[:order][:area], city_hint: params[:order][:city], 
                 state_hint: params[:order][:state], pincode_hint: params[:order][:pincode])
-            puts "false"
+
+        elsif amount_cal
+            flash.alert = "Quantity not available"
+            redirect_to orders_create_path(stock_hint: params[:order][:stock_id], quantity_hint: params[:order][:quantity], 
+                flat_hint: params[:order][:flat_num], area_hint: params[:order][:area], city_hint: params[:order][:city], 
+                state_hint: params[:order][:state], pincode_hint: params[:order][:pincode])
         else
-            puts "true"
-            amount_cal
+            @order = Order.new(order_number: "#{order_num}", stock_id: "#{@stock_id}", quantity: @quantity.to_i, user_id: @user_id, 
+                order_date: "#{current_date}", status: "In transit", total_amount: @orderAmount, address: "#{address}")
+            if @order.save  
+                redirect_to orders_track_path, notice: "Order created successfully"
+            else
+                redirect_to root_path, alert: "Unable to create order"
+            end
         end
-        @stockAmount = 0
-        current_datetime = Time.now.strftime("%m%d%H%M%S")
     end
 
     def track
@@ -42,12 +53,7 @@ class OrdersController < ApplicationController
             stockData = Stock.find_by(id: @stock_id)
             stockPrice = stockData.price
             stockQuant = stockData.quantity
-            if(stockQuant < @quantity.to_i)
-                flash.alert = "Quantity not available"
-                redirect_to orders_create_path(stock_hint: params[:order][:stock_id], quantity_hint: params[:order][:quantity], 
-                    flat_hint: params[:order][:flat_num], area_hint: params[:order][:area], city_hint: params[:order][:city], 
-                    state_hint: params[:order][:state], pincode_hint: params[:order][:pincode])
-            end
-            @stockAmount = stockPrice*@quantity.to_i
+            @orderAmount = stockPrice*@quantity.to_i
+            return stockQuant < @quantity.to_i 
         end
 end
