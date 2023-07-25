@@ -3,13 +3,12 @@
   <%= stylesheet_link_tag "custom_sign", media: 'all', 'data-turbolinks-track' => true %>
   <%= form_with(url: sign_up_path) do |form| %>
     <% if @user.errors.any? %>
-      <div style="color: red" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <div style="color: red;margin-bottom: 0px;" class="alert alert-danger alert-dismissible fade show" role="alert">
         <ul>
           <% @user.errors.each do |error| %>
             <li><%= error.full_message %></li>
           <% end %>
         </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     <% end %>
 

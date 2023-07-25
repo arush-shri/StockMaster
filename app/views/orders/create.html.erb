@@ -38,29 +38,39 @@
     </head>
     <body style="background-color: #3f3f4e; color: white">
       <div class="container" style="padding-top: 20px;">
+        <% if (alert)%>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <p class="text-secondary text-center" style="margin-bottom: 0px;"><%= alert %></p>
+            <script>
+              setTimeout(function() {
+                document.querySelector('.alert').remove();
+              }, 1800); 
+            </script>
+          </div>
+        <%end %>
         <%= form_with(model: @order, url: orders_path, method: :post) do |form| %>
           <div class="form-row">
             <div class="form-group col-md-6">
               <%= form.label :"Stock Name", style: "display: block; font-size: 18px"  %>
-              <%= form.text_field :stock_id, required: true, autocomplete: "username", placeholder: "Stock", class: "form-control" %>
+              <%= form.text_field :stock_id, value: params[:stock_hint], required: true, autocomplete: "username", placeholder: "Stock", class: "form-control" %>
             </div>
             <div class="form-group col-md-6">
               <%= form.label :"Quantity", style: "display: block; font-size: 18px"  %>
-              <%= form.text_field :quantity, required: true, autocomplete: "username", placeholder: "Quantity", class: "form-control" %>
+              <%= form.text_field :quantity, value: params[:quantity_hint], required: true, autocomplete: "username", placeholder: "Quantity", class: "form-control" %>
             </div>       
           </div>
           <div class="form-group">
             <%= form.label :flat_num, "Flat, House no., Building", style: "display: block; font-size: 18px"  %>
-            <%= form.text_field :flat_num, required: true, autocomplete: "username", placeholder: "1234 Main St", class: "form-control" %>
+            <%= form.text_field :flat_num, value: params[:flat_hint], required: true, autocomplete: "username", placeholder: "1234 Main St", class: "form-control" %>
           </div>
           <div class="form-group">
             <%= form.label :area, "Area, Street, Sector", style: "display: block; font-size: 18px"  %>
-            <%= form.text_field :area, required: true, autocomplete: "username", placeholder: "Street, Area", class: "form-control" %>
+            <%= form.text_field :area, value: params[:area_hint], required: true, autocomplete: "username", placeholder: "Street, Area", class: "form-control" %>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <%= form.label :city, "City", style: "display: block; font-size: 18px"  %>
-              <%= form.text_field :city, required: true, autocomplete: "username", placeholder: "City...", class: "form-control" %>
+              <%= form.text_field :city, value: params[:city_hint], required: true, autocomplete: "username", placeholder: "City...", class: "form-control" %>
             </div>
             <div class="form-group col-md-4">
               <%= form.label :state, "State", style: "font-size: 18px;" %>
@@ -104,11 +114,11 @@
                      "West Bengal"
                    ], 
                     { prompt: 'Choose...' },
-                    class: "form-control form-select-lg mb-3", required: true  %>
+                    class: "form-control form-select-lg mb-3", required: true, value: params[:state_hint]  %>
             </div>
             <div class="form-group col-md-2">
               <%= form.label :pincode, "Pin Code", style: "display: block; font-size: 18px"  %>
-              <%= form.text_field :pincode, required: true, autocomplete: "username", placeholder: "123456", class: "form-control" %>
+              <%= form.text_field :pincode, value: params[:pincode_hint], required: true, autocomplete: "username", placeholder: "123456", class: "form-control" %>
             </div>
           </div>
           <%= form.submit "Continue", class:"btn btn-primary"%>
@@ -116,5 +126,4 @@
       </div>
     </body>
   </html>
-  <%= @some%>
 </body>
