@@ -17,10 +17,6 @@
         </ul>
       </li>
       </ul>
-      <form class="d-flex " style="flex-grow: 1;padding-left: 20px; padding-right: 20px">
-        <input class="form-control me-2 ms auto" type="search" placeholder="Search" aria-label="Search" >
-        <button class="btn btn-outline-success" type="submit" >Search</button>
-      </form>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
         <li class="nav-item">
           <%= link_to "Suppliers Info", suppliers_info_path, class: "nav-link", style: "font-size: 19px;" %>
@@ -32,110 +28,93 @@
     </div>
   </div>
   </nav>
-  <!DOCTYPE html>
-<html>
+  <html>
     <head>
         <title>Create Order</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        />
     </head>
-    <body style="background-color: #3F3F4E;">
-        <div class="container" style="padding-top: 20px;">
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">Stock Name</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Stock"
-                        />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Quantity</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Quantity"
-                        />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputAddress">Flat, House no., Building</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="inputAddress"
-                        placeholder="1234 Main St"
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="inputAddress2">Area, Street, Sector</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="inputAddress2"
-                        placeholder="Street, Area"
-                    />
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputCity">City</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="inputCity"
-                        />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputState">State</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                            <option value="Andhra Pradesh">Andhra Pradesh</option>
-                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                            <option value="Assam">Assam</option>
-                            <option value="Bihar">Bihar</option>
-                            <option value="Chandigarh">Chandigarh</option>
-                            <option value="Chhattisgarh">Chhattisgarh</option>
-                            <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
-                            <option value="Daman and Diu">Daman and Diu</option>
-                            <option value="Delhi">Delhi</option>
-                            <option value="Goa">Goa</option>
-                            <option value="Gujarat">Gujarat</option>
-                            <option value="Haryana">Haryana</option>
-                            <option value="Himachal Pradesh">Himachal Pradesh</option>
-                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                            <option value="Jharkhand">Jharkhand</option>
-                            <option value="Karnataka">Karnataka</option>
-                            <option value="Kerala">Kerala</option>
-                            <option value="Lakshadweep">Lakshadweep</option>
-                            <option value="Madhya Pradesh">Madhya Pradesh</option>
-                            <option value="Maharashtra">Maharashtra</option>
-                            <option value="Manipur">Manipur</option>
-                            <option value="Meghalaya">Meghalaya</option>
-                            <option value="Mizoram">Mizoram</option>
-                            <option value="Nagaland">Nagaland</option>
-                            <option value="Odisha">Odisha</option>
-                            <option value="Puducherry">Puducherry</option>
-                            <option value="Punjab">Punjab</option>
-                            <option value="Rajasthan">Rajasthan</option>
-                            <option value="Sikkim">Sikkim</option>
-                            <option value="Tamil Nadu">Tamil Nadu</option>
-                            <option value="Telangana">Telangana</option>
-                            <option value="Tripura">Tripura</option>
-                            <option value="Uttar Pradesh">Uttar Pradesh</option>
-                            <option value="Uttarakhand">Uttarakhand</option>
-                            <option value="West Bengal">West Bengal</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="inputZip">Pin Code</label>
-                        <input type="text" class="form-control" />
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
-            </form>
-        </div>
+    <body style="background-color: #3f3f4e; color: white">
+      <div class="container" style="padding-top: 20px;">
+        <%= form_with(model: @order, url: orders_path, method: :post) do |form| %>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <%= form.label :"Stock Name", style: "display: block; font-size: 18px"  %>
+              <%= form.text_field :stock_id, required: true, autocomplete: "username", placeholder: "Stock", class: "form-control" %>
+            </div>
+            <div class="form-group col-md-6">
+              <%= form.label :"Quantity", style: "display: block; font-size: 18px"  %>
+              <%= form.text_field :quantity, required: true, autocomplete: "username", placeholder: "Quantity", class: "form-control" %>
+            </div>       
+          </div>
+          <div class="form-group">
+            <%= form.label :flat_num, "Flat, House no., Building", style: "display: block; font-size: 18px"  %>
+            <%= form.text_field :flat_num, required: true, autocomplete: "username", placeholder: "1234 Main St", class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= form.label :area, "Area, Street, Sector", style: "display: block; font-size: 18px"  %>
+            <%= form.text_field :area, required: true, autocomplete: "username", placeholder: "Street, Area", class: "form-control" %>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <%= form.label :city, "City", style: "display: block; font-size: 18px"  %>
+              <%= form.text_field :city, required: true, autocomplete: "username", placeholder: "City...", class: "form-control" %>
+            </div>
+            <div class="form-group col-md-4">
+              <%= form.label :state, "State", style: "font-size: 18px;" %>
+              <%= form.select :state,
+                   [
+                     "Andaman and Nicobar Islands",
+                     "Andhra Pradesh",
+                     "Arunachal Pradesh",
+                     "Assam",
+                     "Bihar",
+                     "Chandigarh",
+                     "Chhattisgarh",
+                     "Dadra and Nagar Haveli",
+                     "Daman and Diu",
+                     "Delhi",
+                     "Goa",
+                     "Gujarat",
+                     "Haryana",
+                     "Himachal Pradesh",
+                     "Jammu and Kashmir",
+                     "Jharkhand",
+                     "Karnataka",
+                     "Kerala",
+                     "Lakshadweep",
+                     "Madhya Pradesh",
+                     "Maharashtra",
+                     "Manipur",
+                     "Meghalaya",
+                     "Mizoram",
+                     "Nagaland",
+                     "Odisha",
+                     "Puducherry",
+                     "Punjab",
+                     "Rajasthan",
+                     "Sikkim",
+                     "Tamil Nadu",
+                     "Telangana",
+                     "Tripura",
+                     "Uttar Pradesh",
+                     "Uttarakhand",
+                     "West Bengal"
+                   ], 
+                    { prompt: 'Choose...' },
+                    class: "form-control form-select-lg mb-3", required: true  %>
+            </div>
+            <div class="form-group col-md-2">
+              <%= form.label :pincode, "Pin Code", style: "display: block; font-size: 18px"  %>
+              <%= form.text_field :pincode, required: true, autocomplete: "username", placeholder: "123456", class: "form-control" %>
+            </div>
+          </div>
+          <%= form.submit "Continue", class:"btn btn-primary"%>
+        <% end %>
+      </div>
     </body>
-</html>
+  </html>
+  <%= @some%>
 </body>

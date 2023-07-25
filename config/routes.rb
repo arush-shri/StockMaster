@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:index, :show, :destroy]
   resource  :password, only: [:edit, :update]
   get '/orders/create', to: 'orders#create'
+  post '/orders', to: 'orders#new'
   get '/orders/track', to: 'orders#track'
   get '/suppliers/info', to: 'suppliers#info'
   namespace :identity do
@@ -13,5 +14,6 @@ Rails.application.routes.draw do
     resource :email_verification, only: [:show, :create]
     resource :password_reset,     only: [:new, :edit, :create, :update]
   end
+  resources :orders
   root "home#index"
 end
