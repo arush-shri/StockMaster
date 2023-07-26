@@ -26,7 +26,10 @@ class OrdersController < ApplicationController
         else
             @order = Order.new(order_number: "#{order_num}", stock_id: "#{@stock_id}", quantity: @quantity.to_i, user_id: @user_id, 
                 order_date: "#{current_date}", status: "In transit", total_amount: @orderAmount, address: "#{address}")
-            if @order.save  
+            if @order.save 
+                stock_data = Stock.find_by(id: @stock_id)
+                stock_quant = stock_data.quantity
+                stock_data.update(quantity: stock_quantity-@quantity.to_i)
                 redirect_to orders_track_path, notice: "Order created successfully"
             else
                 redirect_to root_path, alert: "Unable to create order"
