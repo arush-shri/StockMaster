@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
             if @order.save 
                 stock_data = Stock.find_by(id: @stock_id)
                 stock_quant = stock_data.quantity
-                stock_data.update(quantity: stock_quantity-@quantity.to_i)
+                stock_data.update(quantity: stock_quant-@quantity.to_i)
                 redirect_to orders_track_path, notice: "Order created successfully"
             else
                 redirect_to root_path, alert: "Unable to create order"

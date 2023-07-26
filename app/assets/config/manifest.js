@@ -4,3 +4,4 @@
 //= link_tree ../builds
 //= link custom_sign.css
 //= link custom_home.css
+//= link custom_supplier.css
