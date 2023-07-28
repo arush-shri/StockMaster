@@ -1,5 +1,5 @@
 <body>
-<%= stylesheet_link_tag "custom_home", media: 'all', 'data-turbolinks-track' => true %>
+<%= stylesheet_link_tag "custom_supplier", media: 'all', 'data-turbolinks-track' => true %>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -34,33 +34,27 @@
     </nav>
     <br>
 
-    <div class="line"></div> <!-- Horizontal line -->
-    
-        <div class="container">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th><a>Supplier Name</a></th>
-                        <th><a>Email</a></th>
-                        <th><a>Contact No</a></th>
-                        <th><a>Address</a></th>
-                    
-                    </tr>
-                </thead>
-                <tbody>
-                    <% @supps.each do |supplier|%>
-                        <tr>
-                            <td><%= supplier.supplier_name %></td>
-                            <td><%= supplier.email %></td>
-                            <td><%= supplier.phone %></td>
-                            <td><%= supplier.address %></td>
-                        </tr>
-                    <%end%>        
-                </tbody>
-            </table>
-        </div>
+    <div class="container-fluid " style="width: 90%;margin-top: 20px">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;">Supplier Name</a></th>
+            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;">Email</a></th>
+            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;">Contact No</a></th>
+            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;">Address</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @supps.each do |supplier| %>
+            <tr>
+              <td style="padding: 14px;font-size: 1.28rem;"><%= supplier.supplier_name %></td>
+              <td style="padding: 14px;font-size: 1.28rem;"><%= supplier.email %></td>
+              <td style="padding: 14px;font-size: 1.28rem;"><%= supplier.phone %></td>
+              <td style="padding: 14px;font-size: 1.28rem;"><%= supplier.address %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
-    <!-- Include Bootstrap 3 JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
