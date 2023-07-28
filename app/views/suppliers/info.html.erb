@@ -34,13 +34,33 @@
     </nav>
     <br>
 
-    <% @supps.each do |supplier|%>
-      <div class="card mx-auto" style="width: 95%;margin-top: 20px;">
-          <div class="card-body" >
-              <%= supplier.supplier_name %><br>
-              <%= supplier.email %>
-              <%= supplier.phone %>
-          </div>
-      </div>
-    <%end%>
+    <div class="line"></div> <!-- Horizontal line -->
+    
+        <div class="container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><a>Supplier Name</a></th>
+                        <th><a>Email</a></th>
+                        <th><a>Contact No</a></th>
+                        <th><a>Address</a></th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @supps.each do |supplier|%>
+                        <tr>
+                            <td><%= supplier.supplier_name %></td>
+                            <td><%= supplier.email %></td>
+                            <td><%= supplier.phone %></td>
+                            <td><%= supplier.address %></td>
+                        </tr>
+                    <%end%>        
+                </tbody>
+            </table>
+        </div>
+
+    <!-- Include Bootstrap 3 JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
