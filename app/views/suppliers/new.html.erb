@@ -1,0 +1,136 @@
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <%= image_tag("stockMasterLogo.png", alt: "Stock Master Logo", style: "height:50px")%>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" style="font-size: 18px;padding-left: 20px">Hello <%= @username%>,</a>
+          </li>
+          <li class="nav-item"><%= link_to "Create order", orders_create_path, class: "nav-link", style: "font-size: 19px;" %></li>
+          <li class="nav-item"><%= link_to "Track order", orders_track_path, class: "nav-link", style: "font-size: 19px;" %></li>
+          </ul>
+        </li>
+        </ul>
+        <form class="d-flex " style="flex-grow: 1;padding-left: 20px; padding-right: 20px">
+          <input class="form-control me-2 ms auto" type="search" placeholder="Search for suppliers" aria-label="Search" >
+          <button class="btn btn-outline-success" type="submit" >Search</button>
+        </form>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
+          <li class="nav-item">
+            <%= link_to "Suppliers Info", suppliers_info_path, class: "nav-link", style: "font-size: 19px;" %>
+          </li>
+        </ul>
+        <div style = "padding-left: 30px;" >
+        <%= button_to "Log out", Current.session, method: :delete, class: "btn btn-outline-warning"%>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <html>
+    <head>
+        <title>Create Supplier</title>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        />
+    </head>
+    <body style="background-color: #3f3f4e; color: white">
+      <div class="container" style="padding-top: 20px;">
+        <% if (alert)%>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <p class="text-secondary text-center" style="margin-bottom: 0px;"><%= alert %></p>
+            <script>
+              setTimeout(function() {
+                document.querySelector('.alert').remove();
+              }, 1800); 
+            </script>
+          </div>
+        <%end %>
+        <%= form_with(model: @supplier, url: suppliers_path, method: :post) do |form| %>
+          <div class="form-row">
+            <div class="form-group col-md-5">
+              <%= form.label :"Supplier Name", style: "display: block; font-size: 18px"  %>
+              <%= form.text_field :supplier_name, value: params[:name_hint], required: true, autocomplete: "username", placeholder: "Name", class: "form-control" %>
+            </div>
+            <div class="form-group col-md-5">
+              <%= form.label :"Email address", style: "display: block; font-size: 18px"  %>
+              <%= form.text_field :supplier_email, value: params[:email_hint], required: true, autocomplete: "username", placeholder: "abc@exapmle.com", class: "form-control" %>
+            </div>
+            <div class="form-group col-md-2">
+              <%= form.label :"Phone numbers", style: "display: block; font-size: 18px"  %>
+              <%= form.text_field :phone_num, value: params[:phone_hint], required: true, autocomplete: "username", placeholder: "1234567890", class: "form-control" %>
+            </div>        
+          </div>
+          <div class="form-group">
+            <%= form.label :flat_num, "Flat, House no., Building", style: "display: block; font-size: 18px"  %>
+            <%= form.text_field :flat_num, value: params[:flat_hint], required: true, autocomplete: "username", placeholder: "1234 Main St", class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= form.label :area, "Area, Street, Sector", style: "display: block; font-size: 18px"  %>
+            <%= form.text_field :area, value: params[:area_hint], required: true, autocomplete: "username", placeholder: "Street, Area", class: "form-control" %>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <%= form.label :city, "City", style: "display: block; font-size: 18px"  %>
+              <%= form.text_field :city, value: params[:city_hint], required: true, autocomplete: "username", placeholder: "City...", class: "form-control" %>
+            </div>
+            <div class="form-group col-md-4">
+              <%= form.label :state, "State", style: "font-size: 18px;" %>
+              <%= form.select :state,
+                   [
+                     "Andaman and Nicobar Islands",
+                     "Andhra Pradesh",
+                     "Arunachal Pradesh",
+                     "Assam",
+                     "Bihar",
+                     "Chandigarh",
+                     "Chhattisgarh",
+                     "Dadra and Nagar Haveli",
+                     "Daman and Diu",
+                     "Delhi",
+                     "Goa",
+                     "Gujarat",
+                     "Haryana",
+                     "Himachal Pradesh",
+                     "Jammu and Kashmir",
+                     "Jharkhand",
+                     "Karnataka",
+                     "Kerala",
+                     "Lakshadweep",
+                     "Madhya Pradesh",
+                     "Maharashtra",
+                     "Manipur",
+                     "Meghalaya",
+                     "Mizoram",
+                     "Nagaland",
+                     "Odisha",
+                     "Puducherry",
+                     "Punjab",
+                     "Rajasthan",
+                     "Sikkim",
+                     "Tamil Nadu",
+                     "Telangana",
+                     "Tripura",
+                     "Uttar Pradesh",
+                     "Uttarakhand",
+                     "West Bengal"
+                   ], 
+                    { prompt: 'Choose...' },
+                    class: "form-control form-select-lg mb-3", required: true, value: params[:state_hint]  %>
+            </div>
+            <div class="form-group col-md-2">
+              <%= form.label :pincode, "Pin Code", style: "display: block; font-size: 18px"  %>
+              <%= form.text_field :pincode, value: params[:pincode_hint], required: true, autocomplete: "username", placeholder: "123456", class: "form-control" %>
+            </div>
+          </div>
+          <%= form.submit "Continue", class:"btn btn-primary"%>
+        <% end %>
+      </div>
+    </body>
+  </html>
+</body>

@@ -23,34 +23,44 @@
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
           <li class="nav-item">
-            <%= link_to "Suppliers Info", suppliers_info_path, class: "nav-link", style: "font-size: 19px;" %>
+            <%= link_to "Add new supplier", suppliers_new_path, class: "btn btn-outline-secondary" %>
           </li>
         </ul>
-        <div style = "padding-left: 30px;" >
+        <div style = "padding-left: 4px;padding-right: 15px;" >
         <%= button_to "Log out", Current.session, method: :delete, class: "btn btn-outline-warning"%>
         </div>
       </div>
     </div>
     </nav>
+    <% if (notice)%>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <p class="text-secondary text-center" style="margin-bottom: 0px;"><%= notice %></p>
+        <script>
+          setTimeout(function() {
+            document.querySelector('.alert').remove();
+          }, 1800); 
+        </script>
+      </div>
+    <%end %>
     <br>
 
     <div class="container-fluid " style="width: 90%;margin-top: 20px">
       <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
-            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;">Supplier Name</a></th>
-            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;">Email</a></th>
-            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;">Contact No</a></th>
-            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;">Address</a></th>
+            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Supplier Name</a></th>
+            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Email</a></th>
+            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Contact No</a></th>
+            <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Address</a></th>
           </tr>
         </thead>
         <tbody>
           <% @supps.each do |supplier| %>
             <tr>
-              <td style="padding: 14px;font-size: 1.28rem;"><%= supplier.supplier_name %></td>
-              <td style="padding: 14px;font-size: 1.28rem;"><%= supplier.email %></td>
-              <td style="padding: 14px;font-size: 1.28rem;"><%= supplier.phone %></td>
-              <td style="padding: 14px;font-size: 1.28rem;"><%= supplier.address %></td>
+              <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= supplier.supplier_name %></td>
+              <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= supplier.email %></td>
+              <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= supplier.phone %></td>
+              <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= supplier.address %></td>
             </tr>
           <% end %>
         </tbody>

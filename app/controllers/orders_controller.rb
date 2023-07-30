@@ -51,7 +51,7 @@ class OrdersController < ApplicationController
         def order_params
             params.permit(:stock_id, :quantity, :flat_num, :area, :city, :state, :pincode)
         end
-
+        
         def amount_cal
             stockData = Stock.find_by(id: @stock_id)
             stockPrice = stockData.price

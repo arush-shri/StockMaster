@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   post '/orders', to: 'orders#new'
   get '/orders/track', to: 'orders#track'
   get '/suppliers/info', to: 'suppliers#info'
+  get '/suppliers/new', to: 'suppliers#new'
+  post '/suppliers', to: 'suppliers#create'
   namespace :identity do
     resource :email,              only: [:edit, :update]
     resource :email_verification, only: [:show, :create]
