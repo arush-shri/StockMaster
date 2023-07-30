@@ -40,12 +40,91 @@
     <%end %>
     <br>
 
+  <div class="card" style="width: 95%;">
+    <h1>Track Order</h1>
+    <div class="card-container" id="cardContainer">
     <% @orders.each do |order|%>
       <div class="card mx-auto" style="width: 95%;margin-top: 20px;">
           <div class="card-body" >
-              <%= order.order_number %><br>
-              <%= Stock.find_by(id: order.stock_id).product_name%>
+              <h2>Order Number: <%= order.order_number %></h2>
+              <p><strong>Stock Name:</strong> <%= Stock.find_by(id: order.stock_id).product_name%></p>
+              <p><strong>User Name:</strong> ${item.userName}</p>
+              <p><strong>Status:</strong> ${item.status}</p>
+              <p><strong>Amount:</strong> $${item.amount}</p>
           </div>
       </div>
     <%end%>
+      <!-- Cards will be dynamically generated here -->
+    </div>
+  </div>
+
+  <style>
+  
+  .card {
+    width: calc(100% - 10px); /* 90% screen width with 5% margin on each side */
+    margin: 20px auto;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333333;
+  }
+  
+  .card-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column; /* Change flex-direction to column */
+  }
+  
+  .card-body {
+    align-content: center;
+    background-color: #f2eff4;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .card-body h2 {
+    margin-top: 0;
+    font-size: 25px;
+    align-items: center;
+    
+  }
+  
+  .card-body p {
+    margin: 5px 0; /* Adjust margin for item details */
+    align-items: end;
+    display: inline-block;
+    font-size: 20px;
+    padding-left: 5rem;
+    /* padding-right: 7rem                                                                                                                                                                                                                     rem; */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #dddddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  </style>
 </body>
