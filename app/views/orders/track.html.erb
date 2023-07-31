@@ -3,7 +3,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <%= image_tag("stockMasterLogo.png", alt: "Stock Master Logo", style: "height:50px")%>
+      <%= link_to(image_tag("stockMasterLogo.png", alt: "Stock Master Logo", style: "height:50px",), "/")%>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -38,21 +38,20 @@
         }, 1600);
       </script>
     <%end %>
-    <br>
 
   <div class="card" style="width: 95%;">
-    <h1>Track Order</h1>
+    <h1>Orders</h1>
     <div class="card-container" id="cardContainer">
     <% @orders.each do |order|%>
       <div class="card mx-auto" style="width: 95%;margin-top: 20px;">
           <div class="card-body" >
               <h2>Order Number: <%= order.order_number %></h2>
-              <p><strong>Stock Name:</strong> <%= Stock.find_by(id: order.stock_id).product_name%></p>
+              <p style="padding-left: 0px;"><strong>Stock Name:</strong> <%= Stock.find_by(id: order.stock_id).product_name%></p>
               <p><strong>Quantity:</strong> <%= order.quantity %> </p>
               <p><strong>Status:</strong> <%= order.status %> </p>
               <p><strong>Ordered on:</strong> <%= order.order_date %> </p>
               <p><strong>Amount:</strong> <%= order.total_amount %> </p>
-              <%= form_tag cancel_order_path, method: :post do %>
+              <%= form_tag cancel_order_path, method: :post, style: "display: inline-block;" do %>
                 <%= hidden_field_tag :order_id, order.id %>
                 <p><%= submit_tag 'Cancel Order', class: "btn btn-outline-danger"%></p>
               <% end %>

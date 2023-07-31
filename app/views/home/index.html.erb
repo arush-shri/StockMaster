@@ -1,28 +1,8 @@
 <body>
   <%= stylesheet_link_tag "custom_home", media: 'all', 'data-turbolinks-track' => true %>
-  <% if (notice)%>
-    <div class="alert alert-success alert-dismissible fade show" role="alert" style="height:50px  ">
-      <p style="color: green; margin-bottom: 0px;"><%= notice %></p>
-    </div>
-    <script>
-      setTimeout(function() {
-        document.querySelector('.alert').remove();
-      }, 1600);
-    </script>
-  <%end %>
-  <% if (alert)%>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="height:50px  ">
-      <p style="color: red; margin-bottom: 0px;"><%= alert %></p>
-    </div>
-    <script>
-      setTimeout(function() {
-        document.querySelector('.alert').remove();
-      }, 1600);
-    </script>
-  <%end %>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <%= image_tag("stockMasterLogo.png", alt: "Stock Master Logo", style: "height:50px")%>
+      <%= link_to(image_tag("stockMasterLogo.png", alt: "Stock Master Logo", style: "height:50px",), "/")%>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -51,4 +31,24 @@
       </div>
     </div>
   </nav>
+  <% if (notice)%>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="height:50px  ">
+      <p style="color: green; margin-bottom: 0px;"><%= notice %></p>
+    </div>
+    <script>
+      setTimeout(function() {
+        document.querySelector('.alert').remove();
+      }, 1600);
+    </script>
+  <%end %>
+  <% if (alert)%>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="height:50px  ">
+      <p style="color: red; margin-bottom: 0px;"><%= alert %></p>
+    </div>
+    <script>
+      setTimeout(function() {
+        document.querySelector('.alert').remove();
+      }, 1600);
+    </script>
+  <%end %>
 </body>
