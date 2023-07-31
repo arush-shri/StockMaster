@@ -52,6 +52,40 @@
               <p><strong>Status:</strong> <%= order.status %> </p>
               <p><strong>Ordered on:</strong> <%= order.order_date %> </p>
               <p><strong>Amount:</strong> <%= order.total_amount %> </p>
+              <p>
+                 <%= form_tag cancel_order_path, method: :post do %>
+                   <%= hidden_field_tag :order_id, order.id %>
+                   <%= submit_tag 'Cancel Order', class: "btn btn-outline-danger"%>
+                 <% end %>
+Make sure you have the appropriate route set up for the cancel action in your config/routes.rb file:
+ruby
+Copy code
+post '/orders/cancel_order', to: 'orders#cancel', as: :cancel_order
+In your orders controller, set up the cancel action to handle the incoming order number and perform the cancellation logic:
+ruby
+Copy code
+class OrdersController < ApplicationController
+  # Existing actions and code
+
+  def cancel
+    order_number = params[:order_number]
+    # Do something with the order number to cancel the order
+    # Example: order = Order.find_by(order_number: order_number)
+    # Perform cancellation logic here
+    # Redirect or render response as needed
+  end
+end
+Now, when you press the cancel button on the track order page, the form will submit the order number as a POST request to the cancel action of the orders controller. The cancel action can then handle the cancellation logic for the corresponding order.
+
+Please note that you should replace order in the view with the actual way you are retrieving the order details for the current track order page. Additionally, make sure to adjust the route and path names to match your specific application's conventions.
+
+
+
+
+
+
+
+              </p>
           </div>
       </div>
     <%end%>
