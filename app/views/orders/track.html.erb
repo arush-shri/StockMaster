@@ -48,9 +48,10 @@
           <div class="card-body" >
               <h2>Order Number: <%= order.order_number %></h2>
               <p><strong>Stock Name:</strong> <%= Stock.find_by(id: order.stock_id).product_name%></p>
-              <p><strong>User Name:</strong> ${item.userName}</p>
-              <p><strong>Status:</strong> ${item.status}</p>
-              <p><strong>Amount:</strong> $${item.amount}</p>
+              <p><strong>Quantity:</strong> <%= order.quantity %> </p>
+              <p><strong>Status:</strong> <%= order.status %> </p>
+              <p><strong>Ordered on:</strong> <%= order.order_date %> </p>
+              <p><strong>Amount:</strong> <%= order.total_amount %> </p>
           </div>
       </div>
     <%end%>
