@@ -40,6 +40,12 @@ class OrdersController < ApplicationController
     def track
         @orders = Order.where(user_id: @user_id)
     end
+
+    def cancel_order
+        order_id = params[:order_id]
+        order_data = Order.find_by(id: order_id)
+        order_data.destroy
+    end
  
     private
         def set_username
