@@ -45,6 +45,7 @@ class OrdersController < ApplicationController
         order_id = params[:order_id]
         order_data = Order.find_by(id: order_id)
         order_data.destroy
+        redirect_to orders_track_path, notice: "Order cancelled"
     end
  
     private

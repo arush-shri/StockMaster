@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resource  :password, only: [:edit, :update]
   get '/orders/create', to: 'orders#create'
   post '/orders', to: 'orders#new'
-  post 'orders/cancel_order', to: 'orders#cancel_order'
+  post '/cancel_order', to: 'orders#cancel_order'
   get '/orders/track', to: 'orders#track'
   get '/suppliers/info', to: 'suppliers#info'
   get '/suppliers/new', to: 'suppliers#new'
