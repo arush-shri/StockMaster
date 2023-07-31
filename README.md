@@ -1,24 +1,19 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Stock Master 
 
-Things you may want to cover:
+A ruby on rails web application to help organizations to manage their inventories efficiently.
 
-* Ruby version
+## Functionalities 
+- Users needs to login before acessing any data.
+- You can see the available stock items on home screen.
+- You can see suppliers details and add more as needed.
+- You create order for additional stock or transferring it from one place to another.
+- Orders created can be tracked and cancelled if needed.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Technology Used
+- Rails 7
+- Ruby
+- HTML
+- CSS
+- JavaScript
+- SQLite
