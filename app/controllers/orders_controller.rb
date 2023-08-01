@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
     end
 
     def new
-        @stock_id = params[:order][:stock_id]
+        @stock_id = Stock.find_by(product_name: params[:order][:stock_id]).id
         @quantity = params[:order][:quantity]
         @orderAmount = 0
         order_num = Time.now.strftime("%m%d%H%M%S")

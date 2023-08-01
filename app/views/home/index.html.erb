@@ -1,5 +1,6 @@
 <body>
   <%= stylesheet_link_tag "custom_home", media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag "custom_home"%>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <%= link_to(image_tag("stockMasterLogo.png", alt: "Stock Master Logo", style: "height:50px",), "/")%>
@@ -17,8 +18,8 @@
         </li>
         </ul>
         <form class="d-flex " style="flex-grow: 1;padding-left: 20px; padding-right: 20px">
-          <input class="form-control me-2 ms auto" type="search" placeholder="Search for products" aria-label="Search" >
-          <button class="btn btn-outline-success" type="submit" >Search</button>
+          <input class="form-control me-2 ms auto" type="search" placeholder="Search for products" aria-label="Search" id="searchBar">
+          <input type="button" value="Search" id="searchBtn" onclick="search()" class="btn btn-outline-success"/>
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
           <li class="nav-item">
@@ -51,4 +52,28 @@
       }, 1600);
     </script>
   <%end %>
+  <div class="container-fluid " style="width: 90%;margin-top: 20px">
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Product Name</a></th>
+          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Category</a></th>
+          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Quantity</a></th>
+          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Price</a></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @stock.each do |data|%>
+          <tr>
+            <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;" class="ProductName"><%= data.product_name %></td>
+            <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= data.category %></td>
+            <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= data.quantity %></td>
+            <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= number_with_precision(data.price, precision: 2) %>
+              <%= link_to "Order Now", orders_create_path(stock_hint: data.product_name), class: "btn btn-outline-dark", style: "font-size: 19px;float: right;margin-right: 10px"%>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </body>
