@@ -13,4 +13,4 @@ function search() {
             product.parentElement.style.display = "none";
         }
     }
-  }
+}

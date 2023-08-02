@@ -18,7 +18,7 @@
         </li>
         </ul>
         <form class="d-flex " style="flex-grow: 1;padding-left: 20px; padding-right: 20px">
-          <input class="form-control me-2 ms auto" type="search" placeholder="Search for products" aria-label="Search" id="searchBar">
+          <input class="form-control me-2 ms auto" type="search" placeholder="Search for products" aria-label="Search" id="searchBar" oninput="search()">
           <input type="button" value="Search" id="searchBtn" onclick="search()" class="btn btn-outline-success"/>
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
@@ -60,6 +60,7 @@
           <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Category</a></th>
           <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Quantity</a></th>
           <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Price</a></th>
+          <th style="padding: 11px; width:22%;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Ordering</a></th>
         </tr>
       </thead>
       <tbody>
@@ -68,12 +69,65 @@
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;" class="ProductName"><%= data.product_name %></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= data.category %></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= data.quantity %></td>
-            <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= number_with_precision(data.price, precision: 2) %>
-              <%= link_to "Order Now", orders_create_path(stock_hint: data.product_name), class: "btn btn-outline-dark", style: "font-size: 19px;float: right;margin-right: 10px"%>
+            <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= number_with_precision(data.price, precision: 2) %></td>
+            <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;">
+              <%= link_to "Order Now", orders_create_path(stock_hint: data.product_name), class: "btn btn-outline-dark", style: "font-size: 18px;float: left;"%>
+              <button class="btn btn-outline-dark" style ="font-size: 18px;float: right;" id="showPopupBtn">Ship to warehouse</button>
             </td>
           </tr>
+            <div class="overlay" id="overlay">
+              <div class="popup">
+                <form>
+                  <div class="form-row">
+                    <div class="form-group col">
+                      <label for="warehouse">Warehouse:</label>
+                      <input type="text" class="form-control" id="warehouse" required style = "width: 310px;"/>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col">
+                      <label for="quantity" style = "margin-top: 5px;">Quantity:</label>
+                      <input type="number" class="form-control" id="quantity" required style = "width: 310px;"/>
+                    </div>
+                  </div>
+                  <div class="button-container">
+                    <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Submit</button>
+                    <button type="button" class="btn btn-secondary" id="closePopupBtn" style="margin-top: 15px; margin-left: 5px;">Cancel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
         <% end %>
       </tbody>
     </table>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function showPopup() {
+        $("#overlay").fadeIn();
+        $("body").addClass("blur");
+    }
+    function closePopup() {
+        $("#overlay").fadeOut();
+        $("body").removeClass("blur");
+    }
+    $(document).ready(function () {
+        $("#showPopupBtn").click(function () {
+            showPopup();
+        });
+        $("#closePopupBtn").click(function () {
+            closePopup();
+        });
+        $(document).on("click", function (event) {
+            if (
+                $(event.target).closest(".popup").length === 0 &&
+                $(event.target).attr("id") !== "showPopupBtn"
+            ) {
+                closePopup();
+            }
+        });
+    });
+  </script>
 </body>
