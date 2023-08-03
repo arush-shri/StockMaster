@@ -72,35 +72,32 @@
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= number_with_precision(data.price, precision: 2) %></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;">
               <%= link_to "Order Now", orders_create_path(stock_hint: data.product_name), class: "btn btn-outline-dark", style: "font-size: 18px;float: left;"%>
-              <%= link_to "Ship to warehouse", class: "btn btn-outline-dark", style: "font-size: 18px;float: right;",  id: "showPopupBtn"%>
+              <button class="btn btn-outline-dark showPopupBtn" style ="font-size: 18px;float: right;" data-product="<%= data.product_name %>">Ship to warehouse</button>
+                <div class="overlay" id="overlay">
+                  <div class="popup">
+                    <%= form_with(model: @ship, url: orders_path, method: :post) do |form| %>
+                      <div class="form-row">
+                        <div class="form-group col">
+                          <%= form.label :"Warehouse:", style: "display: block; font-size: 18px" %>
+                          <%= form.text_field :warehouse_name, required: true, autocomplete: "username", class: "form-control", id: "warehouse", style: "width: 310px;"%>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col">
+                          <%= form.label :"Quantity:", style: "display: block; font-size: 18px; margin-top: 5px;"  %>
+                          <%= form.text_field :quantity, required: true, autocomplete: "username", class: "form-control", id: "quantity", style: "width: 310px;"%>
+                        </div>
+                      </div>
+                      <%= hidden_field_tag :product_name, "null" %>
+                      <div class="button-container">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Submit</button>
+                        <button type="button" class="btn btn-secondary" id="closePopupBtn" style="margin-top: 15px; margin-left: 5px;">Cancel</button>
+                      </div>
+                    <%end%>
+                  </div>
+                </div>
             </td>
           </tr>
-            <div class="overlay" id="overlay">
-              <div class="popup">
-                <%= form_with(model: @ship, url: orders_ship_path, method: :post) do |form| %>
-                  <div class="form-row">
-                    <div class="form-group col">
-                      <%= form.label :"Warehouse:", style: "display: block; font-size: 18px"  %>
-                      <%= form.text_field :warehouse_name, required: true, autocomplete: "username", class: "form-control", id: "warehouse", style: "width: 310px;"%>
-                      <label for="warehouse"></label>
-                      <input type="text" class="form-control" id="warehouse" required style = "width: 310px;"/>
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group col">
-                      <%= form.label :"Warehouse:", style: "display: block; font-size: 18px; margin-top: 5px;"  %>
-                      <%= form.text_field :warehouse_name, required: true, autocomplete: "username", class: "form-control", id: "quantity", style: "width: 310px;"%>
-                      <label for="quantity" style = "">Quantity:</label>
-                      <input type="number" class="form-control" id="quantity" required style = "width: 310px;"/>
-                    </div>
-                  </div>
-                  <div class="button-container">
-                    <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Submit</button>
-                    <button type="button" class="btn btn-secondary" id="closePopupBtn" style="margin-top: 15px; margin-left: 5px;">Cancel</button>
-                  </div>
-                </form>
-              </div>
-            </div>
         <% end %>
       </tbody>
     </table>
@@ -118,8 +115,10 @@
         $("body").removeClass("blur");
     }
     $(document).ready(function () {
-        $("#showPopupBtn").click(function () {
+        $(".showPopupBtn").click(function () {
+            var productName = $(this).data("product");
             showPopup();
+            $("#product_name").val(productName);
         });
         $("#closePopupBtn").click(function () {
             closePopup();
@@ -127,7 +126,7 @@
         $(document).on("click", function (event) {
             if (
                 $(event.target).closest(".popup").length === 0 &&
-                $(event.target).attr("id") !== "showPopupBtn"
+                !$(event.target).hasClass("showPopupBtn")
             ) {
                 closePopup();
             }
