@@ -72,21 +72,25 @@
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= number_with_precision(data.price, precision: 2) %></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;">
               <%= link_to "Order Now", orders_create_path(stock_hint: data.product_name), class: "btn btn-outline-dark", style: "font-size: 18px;float: left;"%>
-              <button class="btn btn-outline-dark" style ="font-size: 18px;float: right;" id="showPopupBtn">Ship to warehouse</button>
+              <%= link_to "Ship to warehouse", class: "btn btn-outline-dark", style: "font-size: 18px;float: right;",  id: "showPopupBtn"%>
             </td>
           </tr>
             <div class="overlay" id="overlay">
               <div class="popup">
-                <form>
+                <%= form_with(model: @ship, url: orders_ship_path, method: :post) do |form| %>
                   <div class="form-row">
                     <div class="form-group col">
-                      <label for="warehouse">Warehouse:</label>
+                      <%= form.label :"Warehouse:", style: "display: block; font-size: 18px"  %>
+                      <%= form.text_field :warehouse_name, required: true, autocomplete: "username", class: "form-control", id: "warehouse", style: "width: 310px;"%>
+                      <label for="warehouse"></label>
                       <input type="text" class="form-control" id="warehouse" required style = "width: 310px;"/>
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="form-group col">
-                      <label for="quantity" style = "margin-top: 5px;">Quantity:</label>
+                      <%= form.label :"Warehouse:", style: "display: block; font-size: 18px; margin-top: 5px;"  %>
+                      <%= form.text_field :warehouse_name, required: true, autocomplete: "username", class: "form-control", id: "quantity", style: "width: 310px;"%>
+                      <label for="quantity" style = "">Quantity:</label>
                       <input type="number" class="form-control" id="quantity" required style = "width: 310px;"/>
                     </div>
                   </div>
