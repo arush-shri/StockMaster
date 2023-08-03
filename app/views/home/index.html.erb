@@ -75,10 +75,10 @@
               <button class="btn btn-outline-dark showPopupBtn" style ="font-size: 18px;float: right;" data-product="<%= data.product_name %>">Ship to warehouse</button>
                 <div class="overlay" id="overlay">
                   <div class="popup">
-                    <%= form_with(model: @ship, url: orders_path, method: :post) do |form| %>
+                    <%= form_with(model: @ship, url: orders_ship_path, method: :post) do |form| %>
                       <div class="form-row">
                         <div class="form-group col">
-                          <%= form.label :"Warehouse:", style: "display: block; font-size: 18px" %>
+                          <%= form.label :"Warehouse:", style: "display: block; font-size: 18px"  %>
                           <%= form.text_field :warehouse_name, required: true, autocomplete: "username", class: "form-control", id: "warehouse", style: "width: 310px;"%>
                         </div>
                       </div>
@@ -88,7 +88,7 @@
                           <%= form.text_field :quantity, required: true, autocomplete: "username", class: "form-control", id: "quantity", style: "width: 310px;"%>
                         </div>
                       </div>
-                      <%= hidden_field_tag :product_name, "null" %>
+                      <%= hidden_field_tag :ship_product_name, "none" %>
                       <div class="button-container">
                         <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Submit</button>
                         <button type="button" class="btn btn-secondary" id="closePopupBtn" style="margin-top: 15px; margin-left: 5px;">Cancel</button>
@@ -118,7 +118,7 @@
         $(".showPopupBtn").click(function () {
             var productName = $(this).data("product");
             showPopup();
-            $("#product_name").val(productName);
+            $("#ship_product_name").val(productName);
         });
         $("#closePopupBtn").click(function () {
             closePopup();

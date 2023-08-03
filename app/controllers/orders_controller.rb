@@ -47,6 +47,9 @@ class OrdersController < ApplicationController
         order_data.destroy
         redirect_to orders_track_path, notice: "Order cancelled"
     end
+
+    def ship
+    end
  
     private
         def set_username

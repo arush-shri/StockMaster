@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/orders/create', to: 'orders#create'
   post '/orders', to: 'orders#new'
   post '/cancel_order', to: 'orders#cancel_order'
+  post 'orders/ship', to: 'orders#ship'
   get '/orders/track', to: 'orders#track'
   get '/suppliers/info', to: 'suppliers#info'
   get '/suppliers/new', to: 'suppliers#new'
