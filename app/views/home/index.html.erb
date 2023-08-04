@@ -56,11 +56,11 @@
     <table class="table table-bordered table-striped table-hover">
       <thead>
         <tr>
-          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Product Name</a></th>
-          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Category</a></th>
-          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Quantity</a></th>
-          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Price</a></th>
-          <th style="padding: 11px; width:22%;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Ordering</a></th>
+          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Product Name</p></th>
+          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Category</p></th>
+          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Quantity<span style="float: right;">Warehouse</span></p></th>
+          <th style="padding: 11px;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Price</p></th>
+          <th style="padding: 11px; width:22%;"><p class="fw-bold" style="margin-bottom: 0px;font-size: 1.65rem;color: #0076CE;">Ordering</p></th>
         </tr>
       </thead>
       <tbody>
@@ -68,7 +68,7 @@
           <tr>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;" class="ProductName"><%= data.product_name %></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= data.category %></td>
-            <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= data.quantity %> at <%= data.warehouse%></td>
+            <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= data.quantity %><span style="float: right;"><%= data.warehouse%></span></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= number_with_precision(data.price, precision: 2) %></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;">
               <%= link_to "Order Now", orders_create_path(stock_hint: data.product_name), class: "btn btn-outline-dark", style: "font-size: 18px;float: left;"%>

@@ -39,6 +39,13 @@ class OrdersController < ApplicationController
 
     def track
         @orders = Order.where(user_id: @user_id)
+        @order.each do |ord|
+            if ord.status=="Delivered"
+                stock = Stock.find_by(id: ord.stock_id)
+                quant = stock.quantity
+                stock.update(quantity: quant+ord.quantity)
+            end
+        end
     end
 
     def cancel_order
@@ -82,18 +89,20 @@ class OrdersController < ApplicationController
         def shipment
             dataStock = Stock.find_by(id: @stock_id)
             nameStock = dataStock.product_name
-            stockData = Stock.find_by(product_name: "#{nameStock}", warehouse: "#{@warehouseName}")
+            quantminus = dataStock.quantity
+            stockData = Stock.find_by(product_name: "#{nameStock}", warehouse: "Warehouse #{@warehouseName}")
             if stockData.nil?
                 prod_det = Stock.find_by(id: @stock_id)
                 prod_name = prod_det.product_name
                 prod_cat = prod_det.category
                 prod_price = prod_det.price
-                stock = Stock.new(product_name: "#{prod_name}", category: "#{prod_cat}", quantity: "#{@quantity}", price: prod_price, warehouse: "#{@warehouseName}")
+                stock = Stock.new(product_name: "#{prod_name}", category: "#{prod_cat}", quantity: @quantity.to_i, price: prod_price, warehouse: "Warehouse #{@warehouseName}")
+                stock.save
+                dataStock.update(quantity: quantminus-@quantity.to_i)
             else
                 quant = stockData.quantity
-                quantminus = dataStock.quantity
-                stockData.update(quantity: quant+@quantity)
-                dataStock.update(quantity: quantminus-@quantity)
+                stockData.update(quantity: quant+@quantity.to_i)
+                dataStock.update(quantity: quantminus-@quantity.to_i)
             end
         end
 end

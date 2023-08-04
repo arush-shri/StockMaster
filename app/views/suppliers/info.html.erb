@@ -1,6 +1,6 @@
 <body>
 <%= stylesheet_link_tag "custom_supplier", media: 'all', 'data-turbolinks-track' => true %>
-
+<%= javascript_include_tag "custom_home"%>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <%= link_to(image_tag("stockMasterLogo.png", alt: "Stock Master Logo", style: "height:50px",), "/")%>
@@ -18,8 +18,8 @@
         </li>
         </ul>
         <form class="d-flex " style="flex-grow: 1;padding-left: 20px; padding-right: 20px">
-          <input class="form-control me-2 ms auto" type="search" placeholder="Search for suppliers" aria-label="Search" >
-          <button class="btn btn-outline-success" type="submit" >Search</button>
+          <input class="form-control me-2 ms auto" type="search" placeholder="Search for suppliers" aria-label="Search" id="searchBar" oninput="search()">
+          <input type="button" value="Search" id="searchBtn" onclick="search()" class="btn btn-outline-success"/>
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
           <li class="nav-item">
@@ -57,7 +57,7 @@
         <tbody>
           <% @supps.each do |supplier| %>
             <tr>
-              <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= supplier.supplier_name %></td>
+              <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"  class="ProductName"><%= supplier.supplier_name %></td>
               <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= supplier.email %></td>
               <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= supplier.phone %></td>
               <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= supplier.address %></td>
