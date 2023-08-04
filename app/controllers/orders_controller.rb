@@ -49,6 +49,15 @@ class OrdersController < ApplicationController
     end
 
     def ship
+        @quantity = params[:quantity]
+        @stock_id = params[:ship_product_id]
+        @warehouseName = params[:warehouse_name]
+        if amount_cal
+            redirect_to root_path, alert: "Quantity not available"
+        else
+            shipment
+            redirect_to root_path, notice: "Item shipped"
+        end
     end
  
     private
@@ -68,5 +77,23 @@ class OrdersController < ApplicationController
             stockQuant = stockData.quantity
             @orderAmount = stockPrice*@quantity.to_i
             return stockQuant < @quantity.to_i 
+        end
+
+        def shipment
+            dataStock = Stock.find_by(id: @stock_id)
+            nameStock = dataStock.product_name
+            stockData = Stock.find_by(product_name: "#{nameStock}", warehouse: "#{@warehouseName}")
+            if stockData.nil?
+                prod_det = Stock.find_by(id: @stock_id)
+                prod_name = prod_det.product_name
+                prod_cat = prod_det.category
+                prod_price = prod_det.price
+                stock = Stock.new(product_name: "#{prod_name}", category: "#{prod_cat}", quantity: "#{@quantity}", price: prod_price, warehouse: "#{@warehouseName}")
+            else
+                quant = stockData.quantity
+                quantminus = dataStock.quantity
+                stockData.update(quantity: quant+@quantity)
+                dataStock.update(quantity: quantminus-@quantity)
+            end
         end
 end

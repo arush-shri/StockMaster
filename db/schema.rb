@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_114050) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_04_050637) do
   create_table "email_verification_tokens", force: :cascade do |t|
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_email_verification_tokens_on_user_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_114050) do
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "warehouse"
   end
 
   create_table "suppliers", force: :cascade do |t|
