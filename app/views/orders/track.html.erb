@@ -12,7 +12,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" style="font-size: 18px;padding-left: 20px">Hello <%= @username%>,</a>
           </li>
-          <li class="nav-item"><%= link_to "Create order", orders_create_path, class: "nav-link", style: "font-size: 19px;" %></li>
+          <li class="nav-item"><%= link_to "Supply Product", orders_create_path, class: "nav-link", style: "font-size: 19px;" %></li>
           <li class="nav-item"><%= link_to "Track order", orders_track_path, class: "nav-link", style: "font-size: 19px;" %></li>
           </ul>
         </li>
@@ -45,7 +45,7 @@
     <% @orders.each do |order|%>
       <div class="card mx-auto" style="width: 95%;margin-top: 20px;">
           <div class="card-body" >
-              <h2>Order Number: <%= order.order_number %></h2>
+              <h2><%= order.orderType%> Number: <%= order.order_number %></h2>
               <p style="padding-left: px;"><strong>Stock Name:</strong> <%= Stock.find_by(id: order.stock_id).product_name%></p>
               <p><strong>Quantity:</strong> <%= order.quantity %> </p>
               <p><strong>Status:</strong> <%= order.status %> </p>
@@ -53,7 +53,13 @@
               <p><strong>Amount:</strong> <%= number_with_precision(order.total_amount, precision: 2) %> </p>
               <%= form_tag cancel_order_path, method: :post, style: "display: inline-block;float: right;padding-right: 50px" do %>
                 <%= hidden_field_tag :order_id, order.id %>
-                <p><%= submit_tag 'Cancel Order', class: "btn btn-outline-danger"%></p>
+                <% if order.status == "In transit" %>
+                  <p><%= submit_tag 'Cancel Order', class: "btn btn-outline-danger" %></p>
+                <% elsif order.status == "Delivered" %>
+                  <p style = "color: green; margin-right: 30px;"> Delivered </p>
+                <% else %>
+                  <p style = "color: red; margin-right: 18px;"> Cancelled </p>
+                <% end %>
               <% end %>
           </div>
       </div>

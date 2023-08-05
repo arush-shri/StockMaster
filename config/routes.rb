@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/orders', to: 'orders#new'
   post '/cancel_order', to: 'orders#cancel_order'
   post 'orders/ship', to: 'orders#ship'
+  post 'orders/make', to: 'orders#make'
   get '/orders/track', to: 'orders#track'
   get '/suppliers/info', to: 'suppliers#info'
   get '/suppliers/new', to: 'suppliers#new'

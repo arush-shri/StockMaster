@@ -12,7 +12,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" style="font-size: 18px;padding-left: 20px">Hello <%= @username%>,</a>
           </li>
-          <li class="nav-item"><%= link_to "Create order", orders_create_path, class: "nav-link", style: "font-size: 19px;" %></li>
+          <li class="nav-item"><%= link_to "Supply Product", orders_create_path, class: "nav-link", style: "font-size: 19px;" %></li>
           <li class="nav-item"><%= link_to "Track order", orders_track_path, class: "nav-link", style: "font-size: 19px;" %></li>
           </ul>
         </li>
@@ -71,31 +71,52 @@
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= data.quantity %><span style="float: right;"><%= data.warehouse%></span></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= number_with_precision(data.price, precision: 2) %></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;">
-              <%= link_to "Order Now", orders_create_path(stock_hint: data.product_name), class: "btn btn-outline-dark", style: "font-size: 18px;float: left;"%>
-              <button class="btn btn-outline-dark showPopupBtn" style ="font-size: 18px;float: right;" data-product="<%= data.id %>">Ship to warehouse</button>
-                <div class="overlay" id="overlay">
-                  <div class="popup">
-                    <%= form_with(url: orders_ship_path, method: :post) do |form| %>
-                      <div class="form-row">
-                        <div class="form-group col">
-                          <%= form.label :"Warehouse:", style: "display: block; font-size: 18px"  %>
-                          <%= form.text_field :warehouse_name, required: true, autocomplete: "username", class: "form-control", id: "warehouse", style: "width: 310px;"%>
-                        </div>
+              <button class="btn btn-outline-dark orderBtn" style ="font-size: 18px;" data-productorder="<%= data.id %>">Order Now</button>
+              <button class="btn btn-outline-dark shipBtn" style ="font-size: 18px;float: right;" data-product="<%= data.id %>">Ship to warehouse</button>
+              <div class="overlay" id="overlay">
+                <div class="popup">
+                  <%= form_with(url: orders_ship_path, method: :post) do |form| %>
+                    <div class="form-row">
+                      <div class="form-group col">
+                        <%= form.label :"Warehouse:", style: "display: block; font-size: 18px"  %>
+                        <%= form.text_field :warehouse_name, required: true, autocomplete: "username", class: "form-control", id: "warehouse", style: "width: 310px;"%>
                       </div>
-                      <div class="form-row">
-                        <div class="form-group col">
-                          <%= form.label :"Quantity:", style: "display: block; font-size: 18px; margin-top: 5px;"  %>
-                          <%= form.text_field :quantity, required: true, autocomplete: "username", class: "form-control", id: "quantity", style: "width: 310px;"%>
-                        </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col">
+                        <%= form.label :"Quantity:", style: "display: block; font-size: 18px; margin-top: 5px;"  %>
+                        <%= form.text_field :quantity, required: true, autocomplete: "username", class: "form-control", id: "quantity", style: "width: 310px;"%>
                       </div>
-                      <%= hidden_field_tag :ship_product_id, "none" %>
-                      <div class="button-container">
-                        <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Submit</button>
-                        <button type="button" class="btn btn-secondary" id="closePopupBtn" style="margin-top: 15px; margin-left: 5px;">Cancel</button>
-                      </div>
-                    <%end%>
-                  </div>
+                    </div>
+                    <%= hidden_field_tag :ship_product_id, "none" %>
+                    <div class="button-container">
+                      <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Submit</button>
+                      <button type="button" class="btn btn-secondary" id="closePopupBtn" style="margin-top: 15px; margin-left: 5px;">Cancel</button>
+                    </div>
+                  <%end%>
                 </div>
+              </div>
+              <div class="overlay" id="overlayOrder">
+                <div class="popup">
+                  <%= form_with(url: orders_make_path, method: :post) do |form| %>
+                    <div class="form-row">
+                      <div class="form-group col">
+                        <%= form.label :"Quantity:", style: "display: block; font-size: 18px; margin-top: 5px;"  %>
+                        <%= form.text_field :quantity, required: true, autocomplete: "username", class: "form-control", id: "quantity", style: "width: 310px;"%>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <%= form.label :supplier, "Supplier", style: "font-size: 18px;" %>
+                      <%= form.select :supplier, @suppList, { prompt: 'Choose...' }, class: "form-control form-select mb-3", required: true%>
+                    </div>
+                    <%= hidden_field_tag :order_product_id, "none" %>
+                    <div class="button-container">
+                      <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Submit</button>
+                      <button type="button" class="btn btn-secondary" id="closePopupBtnOrder" style="margin-top: 15px; margin-left: 5px;">Cancel</button>
+                    </div>
+                  <%end%>
+                </div>
+              </div>
             </td>
           </tr>
         <% end %>
@@ -110,23 +131,42 @@
         $("#overlay").fadeIn();
         $("body").addClass("blur");
     }
+    function showPopupOrder() {
+        $("#overlayOrder").fadeIn();
+        $("body").addClass("blur");
+    }
     function closePopup() {
         $("#overlay").fadeOut();
+        $("#overlayOrder").fadeOut();
+        $("body").removeClass("blur");
+    }
+    function closePopupOrder() {
+        $("#overlayOrder").fadeOut();
         $("body").removeClass("blur");
     }
     $(document).ready(function () {
-        $(".showPopupBtn").click(function () {
+        $(".shipBtn").click(function () {
             var productName = $(this).data("product");
             showPopup();
             $("#ship_product_id").val(productName);
         });
+        $(".orderBtn").click(function () {
+            var productOrderName = $(this).data("productorder");
+            showPopupOrder();
+            $("#order_product_id").val(productOrderName);
+            console.log(productOrderName)
+        });
         $("#closePopupBtn").click(function () {
             closePopup();
+        });
+        $("#closePopupBtnOrder").click(function () {
+            closePopupOrder();
         });
         $(document).on("click", function (event) {
             if (
                 $(event.target).closest(".popup").length === 0 &&
-                !$(event.target).hasClass("showPopupBtn")
+                !$(event.target).hasClass("shipBtn") &&
+                !$(event.target).hasClass("orderBtn")
             ) {
                 closePopup();
             }
