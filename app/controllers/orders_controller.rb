@@ -62,6 +62,8 @@ class OrdersController < ApplicationController
         order_id = params[:order_id]
         order_data = Order.find_by(id: order_id)
         order_data.update(status: "Cancelled")
+        stock_data = Stock.find_by(id: order_data.stock_id)
+        stock_data.update(quantity: stock_data.quantity + order_data.quantity)
         redirect_to orders_track_path, notice: "Order cancelled"
     end
 
