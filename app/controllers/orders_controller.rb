@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
                     state_hint: params[:order][:state], pincode_hint: params[:order][:pincode])
             else
                 @order = Order.new(order_number: "#{order_num}", stock_id: "#{@stock_id}", quantity: @quantity.to_i, user_id: @user_id, 
-                    order_date: "#{current_date}", status: "In transit", total_amount: @orderAmount, address: "#{address}", deliCount: 0, orderType: "Order")
+                    order_date: "#{current_date}", status: "In transit", total_amount: @orderAmount, address: "#{address}", deliCount: 0, orderType: "Supply")
                 if @order.save 
                     stock_data = Stock.find_by(id: @stock_id)
                     stock_quant = stock_data.quantity
@@ -52,13 +52,15 @@ class OrdersController < ApplicationController
                 stockData = Stock.find_by(product_name: "#{prod_name}", warehouse: ord.address)
                 quant = stockData.quantity
                 ord.update(deliCount: 1)
-                puts "#{stockData}"
                 stockData.update(quantity: quant+ord.quantity)
+            elsif (ord.orderType == "Shipment" and ord.status=="Delivered" and ord.deliCount==0)
+                prod_name = Stock.find_by(id: ord.stock_id).product_name
+                stockData = Stock.find_by(product_name: "#{prod_name}", warehouse: ord.address)
+                quant = stockData.quantity
+                ord.update(deliCount: 1)
+                stockData.update(quantity: quant-ord.quantity)
             end
         end
-    end
-
-    def make
     end
 
     def cancel_order
@@ -79,6 +81,17 @@ class OrdersController < ApplicationController
         else
             shipment
             redirect_to root_path, notice: "Item shipped"
+        end
+    end
+
+    def make
+        @quantity = params[:quantity]
+        @stock_id = params[:order_product_id]
+        @supplierName = params[:supplier]
+        if amount_cal
+            redirect_to root_path, alert: "Quantity not available"
+        else
+            makeOrder
         end
     end
  
@@ -112,13 +125,24 @@ class OrdersController < ApplicationController
                 order_date: "#{current_date}", status: "In transit", total_amount: "#{dataStock.price}", address: "Warehouse #{@warehouseName}", deliCount: 0, orderType: "Shipment")
             order.save
             if stockData.nil?
-                prod_det = Stock.find_by(id: @stock_id)
-                prod_name = prod_det.product_name
-                prod_cat = prod_det.category
-                prod_price = prod_det.price
-                stock = Stock.new(product_name: "#{prod_name}", category: "#{prod_cat}", quantity: 0, price: prod_price, warehouse: "Warehouse #{@warehouseName}")
+                prod_cat = dataStock.category
+                prod_price = dataStock.price
+                stock = Stock.new(product_name: "#{nameStock}", category: "#{prod_cat}", quantity: 0, price: prod_price, warehouse: "Warehouse #{@warehouseName}")
                 stock.save
             end
             dataStock.update(quantity: quantminus-@quantity.to_i)
+        end
+
+        def makeOrder
+            dataStock = Stock.find_by(id: @stock_id)
+            nameStock = dataStock.product_name
+            quantminus = dataStock.quantity
+            order_num = Time.now.strftime("%m%d%H%M%S")
+            current_date = Time.now.strftime("%d-%m-%y")
+            puts "#{current_date}"
+            order = Order.new(order_number: "#{order_num}", stock_id: "#{@stock_id}", quantity: @quantity.to_i, user_id: @user_id, 
+                order_date: "#{current_date}", status: "In transit", total_amount: dataStock.price*@quantity.to_i, address: "#{@supplierName}", deliCount: 0, orderType: "Order")
+            order.save
+            redirect_to orders_track_path, notice: "#{nameStock} Ordered"
         end
 end

@@ -54,7 +54,7 @@
               <%= form_tag cancel_order_path, method: :post, style: "display: inline-block;float: right;padding-right: 50px" do %>
                 <%= hidden_field_tag :order_id, order.id %>
                 <% if order.status == "In transit" %>
-                  <p><%= submit_tag 'Cancel Order', class: "btn btn-outline-danger" %></p>
+                  <p style="padding-left: 79px;"><%= submit_tag 'Cancel Order', class: "btn btn-outline-danger" %></p>
                 <% elsif order.status == "Delivered" %>
                   <p style = "color: green; margin-right: 30px;"> Delivered </p>
                 <% else %>
