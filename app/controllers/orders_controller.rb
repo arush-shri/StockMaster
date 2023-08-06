@@ -32,6 +32,7 @@ class OrdersController < ApplicationController
                     stock_data = Stock.find_by(id: @stock_id)
                     stock_quant = stock_data.quantity
                     redirect_to orders_track_path, notice: "Order created successfully"
+                    stockDet.update(quantity: stockDet.quantity-@quantity.to_i)
                 else
                     redirect_to root_path, alert: "Unable to create order"
                 end
@@ -53,12 +54,6 @@ class OrdersController < ApplicationController
                 quant = stockData.quantity
                 ord.update(deliCount: 1)
                 stockData.update(quantity: quant+ord.quantity)
-            elsif (ord.orderType == "Shipment" and ord.status=="Delivered" and ord.deliCount==0)
-                prod_name = Stock.find_by(id: ord.stock_id).product_name
-                stockData = Stock.find_by(product_name: "#{prod_name}", warehouse: ord.address)
-                quant = stockData.quantity
-                ord.update(deliCount: 1)
-                stockData.update(quantity: quant-ord.quantity)
             end
         end
     end
@@ -139,7 +134,6 @@ class OrdersController < ApplicationController
             quantminus = dataStock.quantity
             order_num = Time.now.strftime("%m%d%H%M%S")
             current_date = Time.now.strftime("%d-%m-%y")
-            puts "#{current_date}"
             order = Order.new(order_number: "#{order_num}", stock_id: "#{@stock_id}", quantity: @quantity.to_i, user_id: @user_id, 
                 order_date: "#{current_date}", status: "In transit", total_amount: dataStock.price*@quantity.to_i, address: "#{@supplierName}", deliCount: 0, orderType: "Order")
             order.save
