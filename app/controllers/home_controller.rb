@@ -15,7 +15,12 @@ class HomeController < ApplicationController
     @price = params[:price]
     @supplier = params[:supplier]
     @warehouse = params[:warehouse]
-    create_product
+    stock = Stock.find_by(product_name: "#{@name}", warehouse: "Warehouse #{@warehouse}")
+    if stock.nil?
+      create_product
+    else
+      redirect_to root_path, alert: "#{@name} already exists"
+    end
   end
   private
     def set_username

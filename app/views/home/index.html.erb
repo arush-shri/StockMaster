@@ -151,13 +151,9 @@
             </div>
           </div>
           <div class="form-row" style="display: flex; justify-content: space-between;">
-            <div class="form-group col">
+            <div class="form-group col" >
               <%= form.label :"Warehouse:", style: "display: block; font-size: 18px; margin-top: 14px;" %>
-              <%= form.text_field :warehouse, required: true, class: "form-control", id: "quantity", style: "width: 210px;"%>
-            </div>
-            <div class="form-group col">
-              <%= form.label :supplier, "Supplier:", style: "font-size: 18px; margin-top: 15px;" %>
-              <%= form.select :supplier, @suppList, { prompt: 'Choose...' }, class: "form-control form-select mb-3", required: true%>
+              <%= form.text_field :warehouse, required: true, class: "form-control", id: "quantity"%>
             </div>
           </div>
           <div class="button-container">
