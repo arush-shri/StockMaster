@@ -23,7 +23,7 @@
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
           <li class="nav-item">
-            <%= link_to "Add new product", suppliers_new_path, class: "btn btn-outline-secondary" %>
+          <button class="btn btn-outline-secondary addProductBtn">Add new product</button>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -84,13 +84,13 @@
                     <div class="form-row">
                       <div class="form-group col">
                         <%= form.label :"Warehouse:", style: "display: block; font-size: 18px"  %>
-                        <%= form.text_field :warehouse_name, required: true, autocomplete: "username", class: "form-control", id: "warehouse", style: "width: 310px;"%>
+                        <%= form.text_field :warehouse_name, required: true, class: "form-control", id: "warehouse", style: "width: 310px;"%>
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="form-group col">
                         <%= form.label :"Quantity:", style: "display: block; font-size: 18px; margin-top: 5px;"  %>
-                        <%= form.text_field :quantity, required: true, autocomplete: "username", class: "form-control", id: "quantity", style: "width: 310px;"%>
+                        <%= form.text_field :quantity, required: true, class: "form-control", id: "quantity", style: "width: 310px;"%>
                       </div>
                     </div>
                     <%= hidden_field_tag :ship_product_id, "none" %>
@@ -107,12 +107,12 @@
                     <div class="form-row">
                       <div class="form-group col">
                         <%= form.label :"Quantity:", style: "display: block; font-size: 18px; margin-top: 5px;"  %>
-                        <%= form.text_field :quantity, required: true, autocomplete: "username", class: "form-control", id: "quantity", style: "width: 310px;"%>
+                        <%= form.text_field :quantity, required: true, class: "form-control", id: "quantity", style: "width: 310px;"%>
                       </div>
                     </div>
                     <div class="form-row">
                       <%= form.label :supplier, "Supplier", style: "font-size: 18px;" %>
-                      <%= form.select :supplier, @suppList, { prompt: 'Choose...' }, class: "form-control form-select mb-3", required: true%>
+                      <%= form.select :supplier, @suppListFiltered, { prompt: 'Choose...' }, class: "form-control form-select mb-3", required: true%>
                     </div>
                     <%= hidden_field_tag :order_product_id, "none" %>
                     <div class="button-container">
@@ -127,6 +127,46 @@
         <% end %>
       </tbody>
     </table>
+    <div class="overlay" id="overlayProduct">
+      <div class="popupProd">
+        <%= form_with(url: home_add_path, method: :post) do |form| %>
+          <div class="form-row" style="display: flex; justify-content: space-between;">
+            <div class="form-group col ">
+              <%= form.label :"Product Name:", style: "display: block; font-size: 18px;"  %>
+              <%= form.text_field :product_name, required: true, class: "form-control", id: "quantity", style: "width: 250px;"%>
+            </div>
+            <div class="form-group col ">
+              <%= form.label :"Category:", style: "display: block; font-size: 18px; margin-left: 15px" %>
+              <%= form.text_field :category, required: true, class: "form-control", id: "quantity", style: "width: 210px; margin-left: 15px"%>
+            </div>
+          </div>
+          <div class="form-row" style="display: flex; justify-content: space-between;">
+            <div class="form-group col">
+              <%= form.label :"Quantity:", style: "display: block; font-size: 18px; margin-top: 14px;" %>
+              <%= form.text_field :quantity, required: true, class: "form-control", id: "quantity", style: "width: 250px;"%>
+            </div>
+            <div class="form-group col">
+              <%= form.label :"Price:", style: "display: block; font-size: 18px; margin-top: 14px;margin-left:15px;" %>
+              <%= form.text_field :price, required: true, class: "form-control", id: "quantity", style: "width: 210px; margin-left:15px;"%>
+            </div>
+          </div>
+          <div class="form-row" style="display: flex; justify-content: space-between;">
+            <div class="form-group col">
+              <%= form.label :"Warehouse:", style: "display: block; font-size: 18px; margin-top: 14px;" %>
+              <%= form.text_field :warehouse, required: true, class: "form-control", id: "quantity", style: "width: 210px;"%>
+            </div>
+            <div class="form-group col">
+              <%= form.label :supplier, "Supplier:", style: "font-size: 18px; margin-top: 15px;" %>
+              <%= form.select :supplier, @suppList, { prompt: 'Choose...' }, class: "form-control form-select mb-3", required: true%>
+            </div>
+          </div>
+          <div class="button-container">
+              <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Submit</button>
+              <button type="button" class="btn btn-secondary" id="closePopupBtnProduct" style="margin-top: 15px; margin-left: 5px;">Cancel</button>
+            </div>
+        <%end%>
+      </div>
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -136,17 +176,25 @@
         $("#overlay").fadeIn();
         $("body").addClass("blur");
     }
+    function showPopupProduct()
+    {
+        $("#overlayProduct").fadeIn();
+        $("body").addClass("blur");
+    }
     function showPopupOrder() {
         $("#overlayOrder").fadeIn();
         $("body").addClass("blur");
     }
     function closePopup() {
         $("#overlay").fadeOut();
-        $("#overlayOrder").fadeOut();
         $("body").removeClass("blur");
     }
     function closePopupOrder() {
         $("#overlayOrder").fadeOut();
+        $("body").removeClass("blur");
+    }
+    function closePopupProduct() {
+        $("#overlayProduct").fadeOut();
         $("body").removeClass("blur");
     }
     $(document).ready(function () {
@@ -159,7 +207,9 @@
             var productOrderName = $(this).data("productorder");
             showPopupOrder();
             $("#order_product_id").val(productOrderName);
-            console.log(productOrderName)
+        });
+        $(".addProductBtn").click(function () {
+            showPopupProduct();
         });
         $("#closePopupBtn").click(function () {
             closePopup();
@@ -167,13 +217,18 @@
         $("#closePopupBtnOrder").click(function () {
             closePopupOrder();
         });
+        $("#closePopupBtnProduct").click(function () {
+            closePopupProduct();
+        });
         $(document).on("click", function (event) {
             if (
                 $(event.target).closest(".popup").length === 0 &&
                 !$(event.target).hasClass("shipBtn") &&
-                !$(event.target).hasClass("orderBtn")
+                !$(event.target).hasClass("orderBtn") &&
+                !$(event.target).hasClass("addProductBtn")
             ) {
                 closePopup();
+                closePopupOrder();
             }
         });
     });

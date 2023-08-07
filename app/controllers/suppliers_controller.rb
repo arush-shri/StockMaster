@@ -11,7 +11,6 @@ class SuppliersController < ApplicationController
         @supplier_email = params[:supplier][:supplier_email]
         @supplier_phone = params[:supplier][:phone_num]
         @supplier_address = "#{params[:supplier][:flat_num]}, #{params[:supplier][:area]}, #{params[:supplier][:city]}, #{params[:supplier][:state]}, #{params[:supplier][:pincode]}"
-        puts "#{@supplier_name}"
         create_supplier
     end
 

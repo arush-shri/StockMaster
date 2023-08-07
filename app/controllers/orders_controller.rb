@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
             current_date = Time.now.strftime("%d-%m-%y")
             address = "#{params[:order][:flat_num]}, #{params[:order][:area]}, #{params[:order][:city]}, #{params[:order][:state]}, #{params[:order][:pincode]}"           
     
-            if amount_cal
+            if amount_cal or @quantity.to_i <= 0
                 flash.alert = "Quantity not available"
                 redirect_to orders_create_path(stock_hint: params[:order][:stock_id], quantity_hint: params[:order][:quantity], 
                     flat_hint: params[:order][:flat_num], area_hint: params[:order][:area], city_hint: params[:order][:city], 
@@ -75,7 +75,7 @@ class OrdersController < ApplicationController
         @quantity = params[:quantity]
         @stock_id = params[:ship_product_id]
         @warehouseName = params[:warehouse_name]
-        if amount_cal
+        if amount_cal  or @quantity.to_i <= 0
             redirect_to root_path, alert: "Quantity not available"
         elsif (Stock.find_by(id: @stock_id).warehouse == "Warehouse #{@warehouseName}")
             redirect_to root_path, alert: "Enter another warehouse"
@@ -89,7 +89,11 @@ class OrdersController < ApplicationController
         @quantity = params[:quantity]
         @stock_id = params[:order_product_id]
         @supplierName = params[:supplier]
-        makeOrder
+        if @quantity.to_i <= 0
+            redirect_to root_path, alert: "Invalid Quantity"
+        else
+            makeOrder
+        end
     end
  
     private
