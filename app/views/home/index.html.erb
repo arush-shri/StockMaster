@@ -23,10 +23,15 @@
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
           <li class="nav-item">
-            <%= link_to "Suppliers Info", suppliers_info_path, class: "nav-link", style: "font-size: 19px;" %>
+            <%= link_to "Add new product", suppliers_new_path, class: "btn btn-outline-secondary" %>
           </li>
         </ul>
-        <div style = "padding-left: 30px;" >
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <%= link_to "Suppliers Info", suppliers_info_path, class: "btn btn-outline-secondary"%>
+          </li>
+        </ul>
+        <div style = "padding-left: 20px;margin-right: 10px;" >
         <%= button_to "Log out", Current.session, method: :delete, class: "btn btn-outline-warning"%>
         </div>
       </div>
