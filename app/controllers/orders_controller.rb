@@ -89,7 +89,11 @@ class OrdersController < ApplicationController
         @quantity = params[:quantity]
         @stock_id = params[:order_product_id]
         @supplierName = params[:supplier]
-        if @quantity.to_i <= 0
+        stoData = Stock.find_by(id: @stock_id)
+        suppList = stoData.supplier.split(',')
+        if !@supplierName.in?suppList
+            redirect_to root_path, alert: "#{@supplierName} doesn't supply #{stoData.product_name}"
+        elsif @quantity.to_i <= 0
             redirect_to root_path, alert: "Invalid Quantity"
         else
             makeOrder

@@ -1,5 +1,4 @@
 <body>
-  <%= csrf_meta_tags %>
   <%= stylesheet_link_tag "custom_home", media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag "custom_home"%>
   <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -114,7 +113,7 @@
                     </div>
                     <div class="form-row">
                       <%= form.label :supplier, "Supplier", style: "font-size: 18px;" %>
-                      <%= form.select :supplier, @suppListFiltered, { prompt: 'Choose...' }, class: "form-control form-select mb-3", required: true%>
+                      <%= form.select :supplier, @suppList, { prompt: 'Choose...' }, class: "form-control form-select mb-3", required: true%>
                     </div>
                     <%= hidden_field_tag :order_product_id, "none" %>
                     <div class="button-container">
@@ -209,20 +208,6 @@
             var productOrderName = $(this).data("productorder");
             showPopupOrder();
             $("#order_product_id").val(productOrderName);
-            $.ajax({
-              type: "POST",
-              url: "<%= home_indexHelper_path %>", // Use the correct route helper here
-              data: { prodId: productOrderName },
-              beforeSend: function(xhr) {
-                xhr.setRequestHeader("X-CSRF-Token", $('meta[name="csrf-token"]').attr("content"));
-              },
-              success: function(response) {
-                console.log(response); // Log the response to the console
-              },
-              error: function(error) {
-                console.error(error); // Log the error to the console
-              }
-            });
         });
         $(".addProductBtn").click(function () {
             showPopupProduct();

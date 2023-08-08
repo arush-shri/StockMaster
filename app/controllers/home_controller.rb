@@ -4,13 +4,7 @@ class HomeController < ApplicationController
   def index
     @stock = Stock.all
     supps = Supplier.all
-    
-    @suppListFiltered = supps.map(&:supplier_name)
     @suppList  = supps.map(&:supplier_name)
-  end
-
-  def indexHelper
-    @prodId = params[:prodId]
   end
 
   def new
