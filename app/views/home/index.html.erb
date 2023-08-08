@@ -1,4 +1,5 @@
 <body>
+  <%= csrf_meta_tags %>
   <%= stylesheet_link_tag "custom_home", media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag "custom_home"%>
   <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -77,6 +78,7 @@
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= number_with_precision(data.price, precision: 2) %></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;">
               <button class="btn btn-outline-dark orderBtn" style ="font-size: 18px;" data-productorder="<%= data.id %>">Order Now</button>
+              
               <button class="btn btn-outline-dark shipBtn" style ="font-size: 18px;float: right;" data-product="<%= data.id %>">Ship to warehouse</button>
               <div class="overlay" id="overlay">
                 <div class="popup">
@@ -155,6 +157,10 @@
               <%= form.label :"Warehouse:", style: "display: block; font-size: 18px; margin-top: 14px;" %>
               <%= form.text_field :warehouse, required: true, class: "form-control", id: "quantity"%>
             </div>
+             <div class="form-group col" style="margin-left:15px;">
+                <%= form.label :supplier, "Supplier", style: "font-size: 18px; margin-top: 14px;" %>
+                <%= form.select :supplier, @suppList, { prompt: 'Choose...' }, class: "form-control form-select mb-3", required: true%>
+              </div>
           </div>
           <div class="button-container">
               <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Submit</button>
@@ -203,6 +209,20 @@
             var productOrderName = $(this).data("productorder");
             showPopupOrder();
             $("#order_product_id").val(productOrderName);
+            $.ajax({
+              type: "POST",
+              url: "<%= home_indexHelper_path %>", // Use the correct route helper here
+              data: { prodId: productOrderName },
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("X-CSRF-Token", $('meta[name="csrf-token"]').attr("content"));
+              },
+              success: function(response) {
+                console.log(response); // Log the response to the console
+              },
+              error: function(error) {
+                console.error(error); // Log the error to the console
+              }
+            });
         });
         $(".addProductBtn").click(function () {
             showPopupProduct();
