@@ -25,12 +25,12 @@
 
     <%= form_with(url: sign_in_path) do |form| %>
       <div>
-        <%= form.label :"Email address", style: "display: block", class: "form-label" %>
+        <%= form.label :"Email address", style: "display: block;font-size: 18px;", class: "form-label" %>
         <%= form.email_field :email, value: params[:email_hint], required: true, autofocus: true, autocomplete: "email", class: "form-control" %>
       </div>
 
-      <div>
-        <%= form.label :Password, style: "display: block", class: "form-label" %>
+      <div style="margin-top: 10px;">
+        <%= form.label :Password, style: "display: block;font-size: 18px;", class: "form-label" %>
         <%= form.password_field :password, required: true, autocomplete: "current-password", class: "form-control" %>
       </div>
 
