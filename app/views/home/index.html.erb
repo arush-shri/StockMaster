@@ -23,7 +23,7 @@
         </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 20px;">
           <li class="nav-item">
-          <button class="btn btn-outline-secondary addProductBtn">Add new product</button>
+          <button class="btn btn-outline-secondary addProductButton">Add new product</button>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -209,7 +209,7 @@
             showPopupOrder();
             $("#order_product_id").val(productOrderName);
         });
-        $(".addProductBtn").click(function () {
+        $(".addProductButton").click(function () {
             showPopupProduct();
         });
         $("#closePopupBtn").click(function () {
@@ -226,7 +226,7 @@
                 $(event.target).closest(".popup").length === 0 &&
                 !$(event.target).hasClass("shipBtn") &&
                 !$(event.target).hasClass("orderBtn") &&
-                !$(event.target).hasClass("addProductBtn")
+                !$(event.target).hasClass("addProductButton")
             ) {
                 closePopup();
                 closePopupOrder();
