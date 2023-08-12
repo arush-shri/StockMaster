@@ -51,25 +51,25 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <%= form.label :"Stock Name", style: "display: block; font-size: 18px"  %>
-              <%= form.text_field :stock_id, value: params[:stock_hint], required: true, autocomplete: "username", placeholder: "Stock", class: "form-control" %>
+              <%= form.text_field :stock_id, value: params[:stock_hint], required: true, placeholder: "Stock", class: "form-control" %>
             </div>
             <div class="form-group col-md-6">
               <%= form.label :"Quantity", style: "display: block; font-size: 18px"  %>
-              <%= form.text_field :quantity, value: params[:quantity_hint], required: true, autocomplete: "username", placeholder: "Quantity", class: "form-control" %>
+              <%= form.text_field :quantity, value: params[:quantity_hint], required: true, placeholder: "Quantity", class: "form-control" %>
             </div>       
           </div>
           <div class="form-group">
             <%= form.label :flat_num, "Flat, House no., Building", style: "display: block; font-size: 18px"  %>
-            <%= form.text_field :flat_num, value: params[:flat_hint], required: true, autocomplete: "username", placeholder: "1234 Main St", class: "form-control" %>
+            <%= form.text_field :flat_num, value: params[:flat_hint], required: true, placeholder: "1234 Main St", class: "form-control" %>
           </div>
           <div class="form-group">
             <%= form.label :area, "Area, Street, Sector", style: "display: block; font-size: 18px"  %>
-            <%= form.text_field :area, value: params[:area_hint], required: true, autocomplete: "username", placeholder: "Street, Area", class: "form-control" %>
+            <%= form.text_field :area, value: params[:area_hint], required: true, placeholder: "Street, Area", class: "form-control" %>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <%= form.label :city, "City", style: "display: block; font-size: 18px"  %>
-              <%= form.text_field :city, value: params[:city_hint], required: true, autocomplete: "username", placeholder: "City...", class: "form-control" %>
+              <%= form.text_field :city, value: params[:city_hint], required: true, placeholder: "City...", class: "form-control" %>
             </div>
             <div class="form-group col-md-4">
               <%= form.label :state, "State", style: "font-size: 18px;" %>
@@ -117,7 +117,7 @@
             </div>
             <div class="form-group col-md-2">
               <%= form.label :pincode, "Pin Code", style: "display: block; font-size: 18px"  %>
-              <%= form.text_field :pincode, value: params[:pincode_hint], required: true, autocomplete: "username", placeholder: "123456", class: "form-control" %>
+              <%= form.text_field :pincode, value: params[:pincode_hint], required: true, placeholder: "123456", class: "form-control" %>
             </div>
           </div>
           <%= form.submit "Continue", class:"btn btn-primary"%>
