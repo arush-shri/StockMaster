@@ -70,6 +70,7 @@
       </thead>
       <tbody>
         <% @stock.to_a.sort_by! { |data| data.product_name.scan(/\d+/).map(&:to_i) }.each do |data| %>
+        <a>
           <tr>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;" class="ProductName"><%= data.product_name %></td>
             <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= data.category %></td>
@@ -125,6 +126,7 @@
               </div>
             </td>
           </tr>
+        </a>
         <% end %>
       </tbody>
     </table>
