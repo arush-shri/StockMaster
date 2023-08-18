@@ -56,7 +56,7 @@
         </thead>
         <tbody>
           <% @supps.each do |supplier| %>
-          <a>
+          <a id="clickableBody">
             <tr>
               <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"  class="ProductName"><%= supplier.supplier_name %></td>
               <td style="padding: 14px;font-size: 1.28rem;vertical-align: middle;"><%= supplier.email %></td>
