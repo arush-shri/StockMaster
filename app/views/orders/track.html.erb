@@ -63,9 +63,9 @@
                 <% if order.status == "In transit" %>
                   <a style="pfloat: right;"><%= submit_tag 'Cancel Order', class: "btn btn-outline-danger" %></a>
                 <% elsif order.status == "Delivered" %>
-                  <p style = "color: green; margin-right: 30px;"> Delivered </p>
+                  <p style = "color: green; margin-right: 25px;"> Delivered </p>
                 <% else %>
-                  <p style = "color: red; margin-right: 18px;"> Cancelled </p>
+                  <p style = "color: red; margin-right: 15px;"> Cancelled </p>
                 <% end %>
               <% end %>
           </div>
