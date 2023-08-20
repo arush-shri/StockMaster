@@ -58,16 +58,16 @@
                 <% else %>
                   Supplier: </strong> <%= order.address %> </p>
                 <% end %>
-              <%= form_tag cancel_order_path, method: :post, style: "display: inline-block;float: right;padding-right: 50px" do %>
-                <%= hidden_field_tag :order_id, order.id %>
                 <% if order.status == "In transit" %>
-                  <a style="pfloat: right;"><%= submit_tag 'Cancel Order', class: "btn btn-outline-danger" %></a>
+                  <%= form_tag cancel_order_path, method: :post, style: "display: inline-block;float: right;padding-right: 50px" do %>
+                    <%= hidden_field_tag :order_id, order.id %>
+                    <a style="pfloat: right;"><%= submit_tag 'Cancel Order', class: "btn btn-outline-danger" %></a>
+                  <% end %>
                 <% elsif order.status == "Delivered" %>
                   <p style = "color: green; margin-right: 25px;"> Delivered </p>
                 <% else %>
                   <p style = "color: red; margin-right: 15px;"> Cancelled </p>
                 <% end %>
-              <% end %>
           </div>
       </div>
     <%end%>
